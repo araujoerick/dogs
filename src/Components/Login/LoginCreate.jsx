@@ -4,6 +4,8 @@ import Button from "../Forms/Button";
 import useForm from "../../Hooks/useForm";
 import { USER_POST } from "../../api";
 import { UserContext } from "../../UserContext";
+import useFetch from "../../Hooks/useFetch";
+import Error from "../Helper/Error";
 
 const LoginCreate = () => {
   const username = useForm();
@@ -12,6 +14,9 @@ const LoginCreate = () => {
 
   // Pega o token e já loga o usuário após a criação
   const { userLogin } = React.useContext(UserContext);
+
+  // Pegando os dados necessário do custom hook useFetch para criar o usuário
+  const { loading, error, request } = useFetch();
 
   // Cria o usuário
   async function handleSubmit(event) {
@@ -23,10 +28,8 @@ const LoginCreate = () => {
       password: password.value,
     });
 
-    const response = await fetch(url, options);
+    const { response } = await request(url, options);
     if (response.ok) userLogin(username.value, password.value);
-
-    console.log(response);
   }
 
   return (
@@ -36,7 +39,12 @@ const LoginCreate = () => {
         <Input label="Usuário" type="text" name="username" {...username} />
         <Input label="Email" type="email" name="email" {...email} />
         <Input label="Senha" type="password" name="password" {...password} />
-        <Button>Cadastrar</Button>
+        {loading ? (
+          <Button disabled>Cadastrando...</Button>
+        ) : (
+          <Button>Cadastrar</Button>
+        )}
+        <Error error={error} />
       </form>
     </section>
   );
