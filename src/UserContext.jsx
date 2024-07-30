@@ -46,17 +46,13 @@ export const UserStorage = ({ children }) => {
     }
   }
 
-  const userLogout = React.useCallback(
-    async function () {
-      setData(null);
-      setError(null);
-      setLoading(false);
-      setIsLoggedIn(false);
-      window.localStorage.removeItem("token");
-      navigate("/login");
-    },
-    [navigate]
-  );
+  const userLogout = React.useCallback(async function () {
+    setData(null);
+    setError(null);
+    setLoading(false);
+    setIsLoggedIn(false);
+    window.localStorage.removeItem("token");
+  }, []);
 
   // Se ao entrar no site ja existir um token no storage, loga
   React.useEffect(() => {
