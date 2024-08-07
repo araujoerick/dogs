@@ -8,6 +8,7 @@ const PhotoComments = (props) => {
   const commentSection = React.useRef(null);
   const { userLogin } = React.useContext(UserContext);
 
+  // Efeito para scrollar a sessão de comentários para o último
   React.useEffect(() => {
     commentSection.current.scrollTop = commentSection.current.scrollHeight;
   }, [comments]);
