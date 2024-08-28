@@ -77,3 +77,13 @@ input {
     transform: initial;
   }
 }
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh + 10rem);
+}
+
+.AppBody {
+  flex: 1;
+}
